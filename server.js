@@ -1,8 +1,10 @@
+// A: Setting Port Fwd'ing #
 if (!process.env.PORT) {
   require('dotenv').config()
   process.env.NODE_ENV = "dev"
 }
 
+/* Module Imports */
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -11,8 +13,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override')
 
-const app = express();
+const app = express(); // B: app init
 
+// C: connecting to a local MongoDB instance
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/local', {
   useNewUrlParser: true,
@@ -21,18 +24,20 @@ mongoose.connect('mongodb://localhost/local', {
   useFindAndModify: false
 });
 
-// view engine setup
+// D: view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); // static files we'll serve client side?
 
 // override with POST having ?_method=DELETE or ?_method=PUT
 app.use(methodOverride('_method'))
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(logger('dev')); // this is telling us what the app is doing in the Terminal?
+
+// E: Middleware parsing request.body, and cookies
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -41,7 +46,7 @@ app.use(cookieParser());
 require('./routes/index.js')(app);
 require('./routes/pets.js')(app);
 
-// catch 404 and forward to error handler
+// F: More Middleware: catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
@@ -59,4 +64,5 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
+// G: Hooray, now I can import my app in other modules!
 module.exports = app;
