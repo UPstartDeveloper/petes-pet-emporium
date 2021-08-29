@@ -55,4 +55,17 @@ module.exports = (app) => {
       return res.redirect('/')
     });
   });
+
+  // SEARCH PET
+  app.get('/search', (req, res) => {
+    // init search pattern
+    const term = new RegExp(req.query.term, 'i')
+    // search based on the namme or breed
+    Pet.find({$or:[
+      {'name': term},
+      {'species': term}
+    ]}).exec((err, pets) => {
+      res.render('pets-index', { pets: pets });
+    })
+  });
 }
