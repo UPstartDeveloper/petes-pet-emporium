@@ -4,6 +4,7 @@ const mongoose = require('mongoose'),
         Schema = mongoose.Schema;
 
 const PetSchema = new Schema({
+// name of field    // type of data we want in the field
     name            : { type: String, required: true }
   , species         : { type: String }
   , birthday        : { type: Date }
@@ -12,6 +13,7 @@ const PetSchema = new Schema({
   , favoriteFood    : { type: String }
   , description     : { type: String }
 },
+// add on optional fields to the Schema
 {
   timestamps: true
 });

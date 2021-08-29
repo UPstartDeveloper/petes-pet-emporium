@@ -14,7 +14,7 @@ module.exports = (app) => {
   // CREATE PET
   app.post('/pets', (req, res) => {
     var pet = new Pet(req.body);
-
+    // if the pet is added OK, then redirect to see its specific details
     pet.save()
       .then((pet) => {
         res.redirect(`/pets/${pet._id}`);
@@ -31,25 +31,25 @@ module.exports = (app) => {
     });
   });
 
-  // EDIT PET
+  // EDIT PET - first, show the form w/ current pet data populating it
   app.get('/pets/:id/edit', (req, res) => {
     Pet.findById(req.params.id).exec((err, pet) => {
       res.render('pets-edit', { pet: pet });
     });
   });
 
-  // UPDATE PET
+  // UPDATE PET - after the user wants to update the pet (override as a POST method)
   app.put('/pets/:id', (req, res) => {
     Pet.findByIdAndUpdate(req.params.id, req.body)
       .then((pet) => {
-        res.redirect(`/pets/${pet._id}`)
+        res.redirect(`/pets/${pet._id}`) // redirect to the detail view
       })
       .catch((err) => {
         // Handle Errors
       });
   });
 
-  // DELETE PET
+  // DELETE PET - clicks the "delete" btn
   app.delete('/pets/:id', (req, res) => {
     Pet.findByIdAndRemove(req.params.id).exec((err, pet) => {
       return res.redirect('/')

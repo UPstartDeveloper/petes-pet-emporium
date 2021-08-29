@@ -1,3 +1,4 @@
+// Mock Data for Our MongoDB instance
 module.exports = [
     {
         "name": "Rex",
