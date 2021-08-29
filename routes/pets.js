@@ -55,4 +55,28 @@ module.exports = (app) => {
       return res.redirect('/')
     });
   });
+
+  // SEARCH PET
+  app.get('/search', (req, res) => {
+    // init search pattern
+    const term = new RegExp(req.query.term, 'i')
+    // search based on the name or breed, w/ pagination
+    const page = req.query.page || 1
+    Pet.paginate(
+      {
+        $or:[
+          {'name': term},
+          {'species': term}
+        ]
+      },
+      // render the results
+      { page: page }).then((results) => {
+        res.render('pets-index', {
+          pets: results.docs, 
+          pagesCount: results.pages, 
+          currentPage: page,
+          term: req.query.term
+        });
+      });
+  });
 }

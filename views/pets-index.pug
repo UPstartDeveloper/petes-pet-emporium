@@ -1,5 +1,5 @@
 extends layout
-//- List View
+
 block content
   .row
     each pet, index in pets
@@ -13,3 +13,28 @@ block content
             .text-right
                 a.card-link(href=`/pets/${pet._id}`) View #{pet.name}
 
+  //- dynamic pagination based on current page 
+  nav(aria-label='Page navigation example').d-flex.justify-content-center
+    ul.pagination
+      //- paginated "Previous" btn
+      if currentPage > 1
+        li.page-item
+          if term
+            a.page-link(href=`?term=${term}&page=${currentPage - 1}`) Previous
+          else 
+            a.page-link(href=`?page=${currentPage - 1}`) Previous
+      - var i = 1;
+      //- paginated "Next" btn
+      while i <= pagesCount
+        li.page-item
+          if term
+            a.page-link(href=`?term=${term}&page=${i}`)= i++
+          else
+            a.page-link(href=`?page=${i}`)= i++
+
+      if currentPage < pagesCount
+        li.page-item
+          if term
+            a.page-link(href=`?term=${term}&page=${parseInt(currentPage) + 1}`) Next
+          else
+            a.page-link(href=`?page=${parseInt(currentPage) + 1}`) Next
