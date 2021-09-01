@@ -1,5 +1,6 @@
 // MODELS
 const Pet = require('../models/pet');
+const { concat } = require('../seeds/pets');
 
 // PET ROUTES
 module.exports = (app) => {
@@ -11,16 +12,17 @@ module.exports = (app) => {
     res.render('pets-new');
   });
 
-  // CREATE PET
+  // CREATE PET (using JSON data)
   app.post('/pets', (req, res) => {
     var pet = new Pet(req.body);
     // if the pet is added OK, then redirect to see its specific details
     pet.save()
       .then((pet) => {
-        res.redirect(`/pets/${pet._id}`);
+        res.send({ pet: pet });
       })
       .catch((err) => {
-        // Handle Errors
+        // STATUS OF 400 FOR VALIDATIONS
+        res.status(400).send(err.errors);
       }) ;
   });
 
