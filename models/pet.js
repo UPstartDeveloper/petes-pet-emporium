@@ -10,17 +10,18 @@ const mongoosePaginate = require('mongoose-paginate');
 const PetSchema = new Schema({
 // name of field    // type of data we want in the field
     name            : { type: String, required: true }
-  , species         : { type: String }
-  , birthday        : { type: Date }
-  , picUrl          : { type: String }
-  , picUrlSq        : { type: String }
-  , favoriteFood    : { type: String }
-  , description     : { type: String }
+  , birthday        : { type: String, required: true }
+  , species         : { type: String, required: true }
+  , picUrl          : { type: String, required: true }
+  , picUrlSq        : { type: String, required: true }
+  , favoriteFood    : { type: String, required: true }
+  , description     : { type: String, minlength: 140, required: true}
 },
 // add on optional fields to the Schema
 {
   timestamps: true
 });
+
 
 // Enable pagination via mongoose
 mongoosePaginate.paginate.options = {

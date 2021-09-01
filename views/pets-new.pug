@@ -8,23 +8,30 @@ block content
       form(action="#", id="new-pet")
         .form-group
             label Name
-            input.form-control(name="name")
+            span(class="required-field") *
+            input.form-control(name="name" required)
         .form-group
             label Birthday
-            input.form-control(name="birthday")
+            span(class="required-field") *
+            input.form-control(name="birthday" required)
         .form-group
             label Species
-            input.form-control(name="species")
+            span(class="required-field") *
+            input.form-control(name="species" required)
         .form-group
             label Rectangular Image URL
-            input.form-control(name="picUrl") 
+            span(class="required-field") *
+            input.form-control(name="picUrl" required type="url") 
         .form-group
             label Square Image URL
-            input.form-control(name="picUrlSq")   
+            span(class="required-field") *
+            input.form-control(name="picUrlSq" required type="url")   
         .form-group
             label Favorite Food
-            input.form-control(name="favoriteFood") 
+            span(class="required-field") *
+            input.form-control(name="favoriteFood" required) 
         .form-group
             label Description
-            textarea.form-control(name="description")   
+            span(class="required-field") *
+            textarea.form-control(name="description" required)   
         button(type="submit").btn.btn-primary Save
