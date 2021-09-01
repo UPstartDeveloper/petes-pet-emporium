@@ -11,3 +11,7 @@
 .card {
     margin-bottom:20px;
 }
+
+.required-field {
+    color: red;
+}
