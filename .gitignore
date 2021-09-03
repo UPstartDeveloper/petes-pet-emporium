@@ -6,6 +6,12 @@
 .AppleDouble
 .LSOverride
 
+# Editor stuff
+.vscode
+
+# Static files
+uploads/*
+
 # Icon must end with two \r
 Icon
 
