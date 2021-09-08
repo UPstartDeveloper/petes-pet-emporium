@@ -123,8 +123,38 @@ module.exports = (app) => {
       });
   });
 
-  // PURCHASE A PET
-  app.post('/pets/:id/purchase', (req,res) => {
-    console.log(`purchase body: ${JSON.stringify(req.body)}`);
+  // PURCHASE
+  // PURCHASE
+  app.post('/pets/:id/purchase', (req, res) => {
+    console.log(req.body);
+    // Set the secret key
+    var stripe = require("stripe")(process.env.PRIVATE_STRIPE_API_KEY);
+
+    // Get the payment token ID submitted by the checkout form
+    const token = req.body.stripeToken; // Using Express
+
+    // req.body.petId can become null through seeding,
+    // this way we'll insure we use a non-null value
+    let petId = req.body.petId || req.params.id;
+
+    Pet.findById(petId).exec((err, pet)=> {
+      // log errors
+      if (err) {
+        console.log('Error: ' + err);
+        res.redirect(`/pets/${req.params.id}`);
+      }
+      // processing purchase
+      const charge = stripe.charges.create({
+        amount: pet.price * 100,
+        currency: 'usd',
+        description: `Purchased ${pet.name}, ${pet.species}`,
+        source: token,
+      }).then((chg) => {
+        res.redirect(`/pets/${req.params.id}`);
+      })
+      .catch(err => {
+        console.log('Error:' + err);
+      });
+    })
   });
 }

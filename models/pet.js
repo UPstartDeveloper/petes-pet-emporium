@@ -17,6 +17,7 @@ const PetSchema = new Schema({
   , avatarUrl       : { type: String, required: true }  // points to an img stored in the cloud
   , favoriteFood    : { type: String, required: true }
   , description     : { type: String, minlength: 140, required: true}
+  , price           : { type: Number, required: true }
 },
 // add on optional fields to the Schema
 {
