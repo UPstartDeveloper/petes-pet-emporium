@@ -1,4 +1,4 @@
-// A: Setting Port Fwd'ing #
+// A: Setting Port Fwd'ing
 if (!process.env.PORT) {
   require('dotenv').config()
   process.env.NODE_ENV = "dev"
@@ -13,7 +13,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override')
 
-const app = express(); // B: app init
+// B: app init
+const app = express();
+app.locals.PUBLIC_STRIPE_API_KEY = process.env.PUBLIC_STRIPE_API_KEY
 
 // C: connecting to a local MongoDB instance
 const mongoose = require('mongoose');

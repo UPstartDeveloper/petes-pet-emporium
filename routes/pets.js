@@ -52,7 +52,6 @@ module.exports = (app) => {
           if (err) { return res.status(400).send({ err: err }) };
 
           // Pop off the -square and -standard and just use the one URL to grab the image
-          console.log(versions);
           versions.forEach(image => {
             var urlArray = image.url.split('-');
             urlArray.pop();
@@ -122,5 +121,10 @@ module.exports = (app) => {
           term: req.query.term
         });
       });
+  });
+
+  // PURCHASE A PET
+  app.post('/pets/:id/purchase', (req,res) => {
+    console.log(`purchase body: ${JSON.stringify(req.body)}`);
   });
 }
